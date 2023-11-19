@@ -2,8 +2,8 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/tanapon395/sa-66-example/controller"
-	"github.com/tanapon395/sa-66-example/entity"
+	"github.com/NamChoco/sa-66-example/controller"
+	"github.com/NamChoco/sa-66-example/entity"
 )
 
 func main() {
