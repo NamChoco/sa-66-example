@@ -1,23 +1,37 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
+
 	"github.com/NamChoco/sa-66-example/controller"
 	"github.com/NamChoco/sa-66-example/entity"
+	"github.com/NamChoco/sa-66-example/middlewares"
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
 	entity.SetupDatabase()
 	r := gin.Default()
 	r.Use(CORSMiddleware())
-	// User Routes
-	r.GET("/users", controller.ListUsers)
-	r.GET("/user/:id", controller.GetUser)
+	r.POST("/login", controller.Login)
 	r.POST("/users", controller.CreateUser)
-	r.PATCH("/users", controller.UpdateUser)
-	r.DELETE("/users/:id", controller.DeleteUser)
-	// Gender Routes
-	r.GET("/genders", controller.ListGenders)
+
+	router := r.Group("")
+	{
+		router.Use(middlewares.Authorizes())
+		{
+			// User Routes
+			router.GET("/users", controller.ListUsers)
+			router.GET("/user/:id", controller.GetUser)
+			router.PATCH("/users", controller.UpdateUser)
+			router.DELETE("/users/:id", controller.DeleteUser)
+			// Gender Routes
+			router.GET("/genders", controller.ListGenders)
+		}
+	}
+	
+
+	
+	
 	// Run the server
 	r.Run()
 }

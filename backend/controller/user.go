@@ -3,8 +3,9 @@ package controller
 import (
 	"net/http"
 
-	"github.com/gin-gonic/gin"
 	"github.com/NamChoco/sa-66-example/entity"
+	"github.com/gin-gonic/gin"
+	"golang.org/x/crypto/bcrypt"
 )
 
 // POST /users
@@ -24,12 +25,18 @@ func CreateUser(c *gin.Context) {
 		return
 	}
 
+	hashPassword, err := bcrypt.GenerateFromPassword([]byte(user.Password),14)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "error hash password"})
+	}
+
 	// สร้าง User
 	u := entity.User{
 		Gender:    gender,         // โยงความสัมพันธ์กับ Entity Gender
 		FirstName: user.FirstName, // ตั้งค่าฟิลด์ FirstName
 		LastName:  user.LastName,  // ตั้งค่าฟิลด์ LastName
 		Email:     user.Email,     // ตั้งค่าฟิลด์ Email
+		Password:  string(hashPassword),
 		Phone:     user.Phone,     // ตั้งค่าฟิลด์ Phone
 		Profile:   user.Profile,   // ตั้งค่าฟิลด์ Profile
 	}
