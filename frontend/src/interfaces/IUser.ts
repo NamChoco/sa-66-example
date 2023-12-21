@@ -6,7 +6,9 @@ export interface UsersInterface {
   LastName?: string;
   Email?: string;
   Phone?: string;
+
   GenderID?: number;
   Gender?: GendersInterface;
+  
   Profile?: string;
 }

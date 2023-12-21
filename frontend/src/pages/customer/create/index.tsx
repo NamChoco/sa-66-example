@@ -29,6 +29,7 @@ function CustomerCreate() {
 
   const onFinish = async (values: UsersInterface) => {
     values.Profile = profile?.thumbUrl;
+    console.log(values);
     let res = await CreateUser(values);
     if (res.status) {
       messageApi.open({

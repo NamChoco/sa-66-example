@@ -9,7 +9,6 @@ async function GetUsers() {
       "Content-Type": "application/json",
     },
   };
-
   let res = await fetch(`${apiUrl}/users`, requestOptions)
     .then((response) => response.json())
     .then((res) => {

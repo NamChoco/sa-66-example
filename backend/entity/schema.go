@@ -23,3 +23,10 @@ type Gender struct {
 	Name string
 	User []User `gorm:"foreignKey:GenderID"`
 }
+
+type Member struct {
+	gorm.Model
+	Username	string  `gorm:"uniqueIndex" valid:"required~Username is required"`
+	Password	string
+	Email       string  `gorm:"uniqueIndex" valid:"required~Email is required, email~Email is invalid"`
+}
